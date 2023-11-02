@@ -1,0 +1,107 @@
+﻿@{
+	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@{
+	if (TempData["msg"] == "success")
+	{
+		@Html.Raw("<script>displaySuccess();</script>")
+	}
+	else if (TempData["msg"] == "error")
+	{
+		@Html.Raw("<script>displayError();</script>")
+	}
+
+}
+
+<div class="container-fluid  dashboard-content">
+	<!-- ============================================================== -->
+	<!-- pageheader -->
+	<!-- ============================================================== -->
+	<div class="row">
+		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+			<div class="page-header">
+				<h2 class="pageheader-title">Data Tables</h2>
+				<p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+				<div class="page-breadcrumb">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a asp-area="admin" asp-controller="dashboard" asp-action="index" class="breadcrumb-link">Dashboard</a></li>
+							<li class="breadcrumb-item"><a asp-area="admin" asp-controller="category" asp-action="index" class="breadcrumb-link">Category</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Data Tables</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- ============================================================== -->
+	<!-- end pageheader -->
+	<!-- ============================================================== -->
+	<div class="row">
+		<!-- ============================================================== -->
+		<!-- basic table  -->
+		<!-- ============================================================== -->
+		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+			<div class="card">
+				<h5 class="card-header">Category Table <a style="float:right" class="btn btn-success" asp-area="admin" asp-controller="category" asp-action="add">Add <i class="fas fa-plus"></i></a></h5>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table table-striped table-bordered first" id="myTable">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Name</th>
+									<th>Description</th>
+									<th>Image</th>
+									<th>Create At</th>
+									<th>Update At</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								@if (ViewBag.categories != null)
+								{
+									@foreach (var i in ViewBag.categories)
+									{
+										
+											<tr>
+												<td>@i.Id</td>
+												<td>@i.Name</td>
+												<td>@i.Description</td>
+												<td align="center"><img width="228" height="250" src="~/imagesCategory/@i.Images" /></td>
+												<td>@i.CreateAt</td>
+												<td>@i.UpdateAt</td>
+												<td>
+													<a class="btn btn-danger" style="margin-right:8px" asp-area="admin" asp-controller="category" asp-action="delete" asp-route-id="@i.Id"><i class="m-r-10 mdi mdi-close"></i>Delete</a>
+													<a class="btn btn-warning" style="margin-right:8px" asp-area="admin" asp-controller="category" asp-action="update" asp-route-id="@i.Id"><i class="icon-refresh"></i>Update</a>
+												</td>
+											</tr>
+										
+									}
+								}
+
+
+							</tbody>
+							<tfoot>
+								<tr>
+									<th>ID</th>
+									<th>Name</th>
+									<th>Description</th>
+									<th>Image</th>
+									<th>Create At</th>
+									<th>Update At</th>
+									<th>Action</th>
+								</tr>
+							</tfoot>
+						</table>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- ============================================================== -->
+		<!-- end basic table  -->
+		<!-- ============================================================== -->
+	</div>
+</div>

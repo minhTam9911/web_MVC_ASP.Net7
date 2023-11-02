@@ -1,0 +1,115 @@
+﻿@{
+	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@model Web_MVC.Models.Category;
+
+@{
+	if (TempData["msg"] == "success")
+	{
+		@Html.Raw("<script>displaySuccess();</script>")
+	}
+	else if (TempData["msg"] == "error")
+	{
+		@Html.Raw("<script>displayError();</script>")
+	}
+
+}
+
+
+
+
+
+
+<div class="container-fluid  dashboard-content">
+	<!-- ============================================================== -->
+	<!-- pageheader -->
+	<!-- ============================================================== -->
+	<div class="row">
+		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+			<div class="page-header">
+				<h2 class="pageheader-title">Form Validations </h2>
+				<p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+				<div class="page-breadcrumb">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a asp-area="admin" asp-controller="dashboard" asp-action="index" class="breadcrumb-link">Dashboard</a></li>
+							<li class="breadcrumb-item"><a asp-area="admin" asp-controller="category" asp-action="index" class="breadcrumb-link">Category</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Update</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<!-- ============================================================== -->
+		<!-- validation form -->
+		<!-- ============================================================== -->
+		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+			<div class="card">
+				<h5 class="card-header">Category Form Add</h5>
+				<div class="card-body">
+					<form class="needs-validation"   asp-area="admin" asp-controller="category" asp-action="updatesave"
+						  method="post" enctype="multipart/form-data">
+						  <input type="hidden" name="value" value="@ViewBag.value"/>
+						<div class="row">
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 " style="margin-bottom: 28px">
+								<label for="validationCustom01">Category Name</label>
+								<input type="text" class="form-control" id="validationCustom01" asp-for="Name" placeholder="Enter category name" required>
+
+								@if (TempData["error-name"] != null)
+								{
+									<span class="text-danger"> @TempData["error-name"]</span>
+								}
+
+							</div>
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 " style="margin-bottom: 28px">
+								<label for="validationCustom02">Image category</label>
+								<input type="file" class="form-control" value="@ViewBag.category.Images" id="file" placeholder="" name="Images" >
+								@if (TempData["error-image"] != null)
+								{
+									<span class="text-danger">@TempData["error-image"]</span>
+								}
+								<div class="image-container" style=" display: flex;justify-content: center; height: 30vh;">
+									<img id="preview" alt="Preview Image"  src="~/imagesCategory/@ViewBag.category.Images"  />
+								</div>
+							</div>
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 " style="margin-bottom: 28px">
+								<label for="validationCustom01">Descript</label>
+								<textarea type="text" class="form-control" asp-for="Description"></textarea>
+							</div>
+						</div>
+						<div class="form-row">
+							<input type="hidden" asp-for="Id" value="0"/>
+							<input type="hidden" asp-for="CreateAt" />
+							<input type="hidden" asp-for="UpdateAt" />
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+								<button style="margin-top:10px" class="btn btn-primary" type="submit">Submit form</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- ============================================================== -->
+		<!-- end validation form -->
+		<!-- ============================================================== -->
+	</div>
+</div>
+<script>
+	
+	var fileInput = document.getElementById("file");
+	var preview = document.getElementById("preview");
+	fileInput.addEventListener('change', function (e) {
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			// Hiển thị ảnh được chọn trong thẻ img
+			preview.src = e.target.result;
+		}
+		// Đọc tệp tin ảnh được chọn
+		reader.readAsDataURL(this.files[0]);
+	});
+</script>
+
+
